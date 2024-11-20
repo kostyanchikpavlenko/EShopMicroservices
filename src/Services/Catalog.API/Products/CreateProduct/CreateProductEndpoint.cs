@@ -2,9 +2,8 @@
 namespace Catalog.API.Products.CreateProduct;
 
 public record CreateProductRequest(
-    Guid ProductId,
     string Name,
-    List<string> Categories,
+    List<string> Category,
     string Description,
     string ImageFile,
     decimal Price);
@@ -21,7 +20,7 @@ public class CreateProductEndpoint : ICarterModule
             {
                 var command = request.Adapt<CreateProductCommand>();
                 var result = await mediatr.Send(command);
-                var response =  result.Adapt<CreateProductResponse>();
+                var response = result.Adapt<CreateProductResponse>();
                 return Results.Created($"/products", response);
             })
             .WithName("CreateProduct")

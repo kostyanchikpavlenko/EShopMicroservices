@@ -1,10 +1,8 @@
-using System.Reflection;
-using Marten;
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Add service
 builder.Services.AddCarter();
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);

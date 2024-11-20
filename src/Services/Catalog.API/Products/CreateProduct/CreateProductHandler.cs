@@ -4,9 +4,9 @@ using Catalog.API.Models;
 namespace Catalog.API.Products.CreateProduct;
 
 public record CreateProductCommand(
-    Guid ProductId,
+    Guid Id,
     string Name,
-    List<string> Categories,
+    List<string> Category,
     string Description,
     string ImageFile,
     decimal Price) : ICommand<CreateProductResult>;
@@ -21,16 +21,15 @@ internal class CreateProductCommandHandler(IDocumentSession session)
         var product = new Product
         {
             Name = request.Name,
-            Categories = request.Categories,
+            Category = request.Category,
             Description = request.Description,
             ImageFile = request.ImageFile,
-            Price = request.Price,
-            ProductId = request.ProductId
+            Price = request.Price
         };
 
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
 
-        return new CreateProductResult(product.ProductId);
+        return new CreateProductResult(product.Id);
     }
 }
