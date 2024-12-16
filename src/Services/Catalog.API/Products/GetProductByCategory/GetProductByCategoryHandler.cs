@@ -18,8 +18,6 @@ public class GetProductByCategoryHandler(IDocumentSession documentSession,
             .Where(x => x.Category.Contains(query.Category))
             .ToListAsync(cancellationToken);
 
-        return product is null
-            ? throw new ProductNotFoundException("Product was not found")
-            : new GetProductByCategoryResult(product);
+        return new GetProductByCategoryResult(product);
     }
 }

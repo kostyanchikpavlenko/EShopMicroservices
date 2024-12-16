@@ -41,7 +41,7 @@ public class UpdateProductCommandHandler(
 
         if (product is null)
         {
-            throw new ProductNotFoundException("Product was not found");
+            throw new ProductNotFoundException(command.Id);
         }
 
         product.Name = command.Name;

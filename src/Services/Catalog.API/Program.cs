@@ -1,5 +1,3 @@
-using BuildingBlocks.Behaviors;
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Add service
@@ -21,10 +19,13 @@ builder.Services.AddMarten(opt =>
 
 builder.Services.AddValidatorsFromAssembly(assembly);
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 app.MapCarter();
 
 //Configure http request pipeline
+app.UseExceptionHandler(options => { });
 
 app.Run();
