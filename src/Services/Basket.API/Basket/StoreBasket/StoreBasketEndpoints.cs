@@ -14,10 +14,10 @@ public class StoreBasketEndpoints : ICarterModule
 
             var response = result.Adapt<StoreBasketResponse>();
 
-            Results.Ok(response);
+            Results.Created($"/basket/{response.UserName}", response);
         })
         .WithName("StoreBasket")
-        .Produces<StoreBasketResponse>(StatusCodes.Status200OK)
+        .Produces<StoreBasketResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("StoreBasket")
         .WithDescription("StoreBasket");

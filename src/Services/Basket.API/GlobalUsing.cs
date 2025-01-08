@@ -6,3 +6,4 @@ global using BuildingBlocks.Result;
 global using Mapster;
 global using BuildingBlocks.Behaviors;
 global using FluentValidation;
+global using BuildingBlocks.Exceptions;
