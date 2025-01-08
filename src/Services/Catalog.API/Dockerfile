@@ -10,6 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Catalog.API/Catalog.API.csproj", "Services/Catalog.API/"]
+COPY ["BuildingBlocks/BuildingBlocks.csproj", "BuildingBlocks/"]
 RUN dotnet restore "./Services/Catalog.API/Catalog.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog.API"
@@ -19,7 +20,12 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+RUN mkdir -p /app/certificates
+COPY Services/Catalog.API/Certificates/aspnetapp.pfx /app/certificates
+
 ENTRYPOINT ["dotnet", "Catalog.API.dll"]

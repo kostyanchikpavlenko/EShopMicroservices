@@ -36,6 +36,7 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
 var app = builder.Build();
+
 //Configure http request pipeline
 app.MapCarter();
 
