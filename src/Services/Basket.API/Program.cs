@@ -1,3 +1,4 @@
+using Basket.API.Data;
 using BuildingBlocks.Exceptions.Handler;
 using Marten;
 
@@ -23,9 +24,13 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
 app.MapCarter();
+
+app.UseExceptionHandler(opt => { });
 
 app.Run();
